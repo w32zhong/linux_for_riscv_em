@@ -8,6 +8,9 @@ BUILDROOT_VERSION="2021.02.6"
 ROOT_DIR=${PWD}
 WORK_DIR=${PWD}/output_mmu_rv32
 
+export PERL_MM_OPT=""
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin
+
 mkdir -p ${WORK_DIR}
 
 ## Buildroot
