@@ -35,7 +35,8 @@ patch -p1 < 0001-add-simple-uart.patch
 patch -p1 < 0002-revert-commit-2217b982624680d19a80ebb4600d05c8586c4f96.patch
 patch -p1 < 0003-check-for-zifencei-compat.patch
 
-make ARCH=riscv CROSS_COMPILE=riscv32-linux-gnu- -j16
+export PATH=`cd ${WORK_DIR}/buildroot/output/host/bin/ && pwd`:$PATH
+make ARCH=riscv CROSS_COMPILE=riscv32-linux- -j16
 
 ## opensbi
 cd ${WORK_DIR}
@@ -46,6 +47,6 @@ git checkout 70ffc3e2e690f2b7bcea456f49206b636420ef5f
 git apply ../../patches/opensbi/0001-add-simple-uart.patch
 
 
-ZIFENCEI_SUPPORT=$(riscv32-linux-gnu-gcc -nostdlib -march=rv32ima_zicsr_zifencei -x c /dev/null -o /dev/null > /dev/null 2>&1 && echo "_zicsr_zifencei" || echo "")
+ZIFENCEI_SUPPORT=$(riscv32-linux-gcc -nostdlib -march=rv32ima_zicsr_zifencei -x c /dev/null -o /dev/null > /dev/null 2>&1 && echo "_zicsr_zifencei" || echo "")
 echo ${ZIFENCEI_SUPPORT}
-make CROSS_COMPILE=riscv32-linux-gnu- PLATFORM_RISCV_XLEN=32 PLATFORM_RISCV_ISA=rv32ima${ZIFENCEI_SUPPORT} PLATFORM=generic FW_PAYLOAD_PATH=../linux/arch/riscv/boot/Image
+make CROSS_COMPILE=riscv32-linux- PLATFORM_RISCV_XLEN=32 PLATFORM_RISCV_ISA=rv32ima${ZIFENCEI_SUPPORT} PLATFORM=generic FW_PAYLOAD_PATH=../linux/arch/riscv/boot/Image
