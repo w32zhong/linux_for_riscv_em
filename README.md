@@ -41,3 +41,9 @@ The result will be a merged (linux+rootfs) binary, inside the opensbi build fold
 ```sh
 output_mmu_rv32/opensbi/build/platform/generic/firmware/fw_payload.bin
 ```
+
+## How to build one package
+```sh
+cd output_mmu_rv32/buildroot
+rm -rf dl/ output/build/host-gcc-initial-9.4.0/ && make -p host-gcc-initial 2>&1 | tee make.log
+```
